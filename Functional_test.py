@@ -53,7 +53,18 @@ class FunctionalTest(TestCase):
 
         botonGrabar = self.browser.find_element_by_id('id_grabar')
         botonGrabar.click()
-        self.browser.implicitly_wait(50)
+        self.browser.implicitly_wait(5)
         span = self.browser.find_element(By.XPATH, '//span[text()="Diana Espitia"]')
 
         self.assertIn('Diana Espitia', span.text)
+
+    def test_verDetalle(self):
+        self.browser.get("http://localhost:8000")
+        span = self.browser.find_element(By.XPATH, '//span[text()="Diana Espitia"]')
+        span.click()
+
+        self.browser.implicitly_wait(5)
+
+        h2 = self.browser.find_element(By.XPATH, '//h2[text()="Diana Espitia"]')
+
+        self.assertIn('Diana Espitia', h2.text)
