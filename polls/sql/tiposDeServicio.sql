@@ -1,0 +1,1 @@
+insert into polls_tiposdeservicio values (1, 'Desarrollo Web', 'link');

@@ -14,6 +14,9 @@ class TiposDeServicio(models.Model):
     def __unicode__(self):
         return u'{0}'.format(self.nombre)
 
+    def __str__(self):
+        return self.nombre
+
 
 class Trabajador(models.Model):
     nombre = models.CharField(max_length=1000)
