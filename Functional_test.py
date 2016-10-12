@@ -11,8 +11,6 @@ class FunctionalTest(TestCase):
         self.browser = webdriver.Firefox()
 
     def tearDown(self):
-        #Trabajador.objects.get(id=1).delete()
-        #User.objects.get(id=1).delete()
         self.browser.quit()
 
     def test_tittle(self):
@@ -68,3 +66,24 @@ class FunctionalTest(TestCase):
         h2 = self.browser.find_element(By.XPATH, '//h2[text()="Diana Espitia"]')
 
         self.assertIn('Diana Espitia', h2.text)
+
+
+    def test_login(self):
+        self.browser.get('http://localhost:8000')
+        link = self.browser.find_element_by_id('id_login')
+        link.click()
+
+        self.browser.implicitly_wait(5)
+
+        username = self.browser.find_element_by_id('id_username')
+        username.send_keys('dp.espitia')
+
+        password = self.browser.find_element_by_id('id_password')
+        password.send_keys('dp.espitia')
+
+        botonLogin = self.browser.find_element_by_id('id_login')
+        botonLogin.click()
+        self.browser.implicitly_wait(5)
+        span = self.browser.find_element(By.XPATH, '//span[text()="Diana Espitia"]')
+
+        self.assertIn('Diana Espitia', span.text)
