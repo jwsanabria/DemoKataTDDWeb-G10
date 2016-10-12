@@ -27,17 +27,16 @@ def index(request):
 
 
 def login(request):
-    username = request.POST.get('usrname', '')
-    password = request.POST.get('psw', '')
-    user = auth.authenticate(username=username, password=password)
-    if user is not None:
-        auth.login(request, user)
-        messages.success(request, "Bienvenido al sistema {}".format(username), extra_tags="alert-success")
-        return HttpResponseRedirect('/')
-    else:
-        messages.error(request, "¡El usuario o la contraseña son incorrectos!", extra_tags="alert-danger")
-        return HttpResponseRedirect('/')
-
+    if request.method == 'POST':
+        username = request.POST['usuario']
+        password = request.POST['pass']
+        user = auth.authenticate(username=username, password=password)
+        if user is not None:
+            auth.login(request, user)
+            messages.success(request, "Bienvenido al sistema {}".format(username), extra_tags="alert-success")
+        else:
+            messages.error(request, "¡El usuario o la contraseña son incorrectos!", extra_tags="alert-danger")
+    return HttpResponseRedirect('/')
 
 def logout(request):
     auth.logout(request)

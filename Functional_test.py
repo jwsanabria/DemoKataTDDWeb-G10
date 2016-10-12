@@ -3,12 +3,11 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as  EC
-#from django.contrib.auth.models import User
-#from polls.models import Trabajador
 
 class FunctionalTest(TestCase):
     def setUp(self):
         self.browser = webdriver.Firefox()
+        self.browser.implicitly_wait(3)
 
     def tearDown(self):
         self.browser.quit()
@@ -73,15 +72,17 @@ class FunctionalTest(TestCase):
         link = self.browser.find_element_by_id('id_login')
         link.click()
 
-        self.browser.implicitly_wait(5)
+        self.browser.switch_to.window(self.browser.window_handles[0])
 
-        username = self.browser.find_element_by_id('id_username')
-        username.send_keys('dp.espitia')
+        self.browser.implicitly_wait(3)
 
-        password = self.browser.find_element_by_id('id_password')
+        usuario = self.browser.find_element_by_id('usuario')
+        usuario.send_keys('dp.espitia')
+
+        password = self.browser.find_element_by_id('pass')
         password.send_keys('dp.espitia')
 
-        botonLogin = self.browser.find_element_by_id('id_login')
+        botonLogin = self.browser.find_element_by_id('id_entrar')
         botonLogin.click()
         self.browser.implicitly_wait(5)
         span = self.browser.find_element(By.XPATH, '//span[text()="Diana Espitia"]')
