@@ -76,7 +76,7 @@ class FunctionalTest(TestCase):
         nombreUsuario.send_keys('dp.espitia.'+ self.random )
 
         imagen = self.browser.find_element_by_id('id_imagen')
-        imagen.send_keys('C:\Users\William\Pictures\JuanaBoda.jpg')
+        imagen.send_keys('C:\Users\William\Pictures\imagen_perfil.png')
 
         clave = self.browser.find_element_by_id('id_password')
         clave.send_keys('dp.espitia')
@@ -113,17 +113,24 @@ class FunctionalTest(TestCase):
         self.browser.implicitly_wait(5)
 
         experiencia = self.browser.find_element_by_id('id_aniosExperiencia')
+        experiencia.clear()
         experiencia.send_keys('7')
 
         self.browser.find_element_by_xpath("//select[@id='id_tiposDeServicio']/option[text()='Desarrollo Web']").click()
         telefono = self.browser.find_element_by_id('id_telefono')
-        telefono.send_keys(self.random)
+        telefono.clear()
+        telefono.send_keys('43214143')
 
         correo = self.browser.find_element_by_id('id_correo')
+        correo.clear()
         correo.send_keys('dp.espitia@uniandes.edu.co')
 
         imagen = self.browser.find_element_by_id('id_imagen')
-        imagen.send_keys('C:\Users\William\Pictures\JuanaBoda.jpg')
+
+        self.browser.implicitly_wait(5)
+        imagen.send_keys('C:\Users\William\Pictures\imagen_perfil.png')
+
+        self.browser.implicitly_wait(5)
 
         botonGrabar = self.browser.find_element_by_id('id_grabar')
         botonGrabar.click()

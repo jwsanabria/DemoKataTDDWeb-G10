@@ -79,6 +79,8 @@ def editar_perfil(request,idTrabajador):
             # formulario validado correctamente
             form_trabajador.save()
             return HttpResponseRedirect('/')
+        else:
+            messages.error(request, form_trabajador.errors, extra_tags="alert-danger")
 
     else:
         # formulario inicial
