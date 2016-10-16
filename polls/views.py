@@ -28,8 +28,8 @@ def index(request):
 
 def login(request):
     if request.method == 'POST':
-        username = request.POST['usuario']
-        password = request.POST['pass']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
         user = auth.authenticate(username=username, password=password)
         if user is not None:
             auth.login(request, user)

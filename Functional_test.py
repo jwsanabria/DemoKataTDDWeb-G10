@@ -1,5 +1,6 @@
 from unittest import TestCase
 from selenium import webdriver
+from datetime import date
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as  EC
@@ -12,9 +13,40 @@ class FunctionalTest(TestCase):
     def tearDown(self):
         self.browser.quit()
 
-    def test_tittle(self):
+    def test_login(self):
+        self.browser.get('http://localhost:8000')
+        link = self.browser.find_element_by_id('id_login')
+        link.click()
+
+        self.browser.implicitly_wait(3)
+
+        usuario = self.browser.find_element_by_id('login-username')
+        usuario.send_keys('dp.espitia')
+
+        password = self.browser.find_element_by_id('login-password')
+        password.send_keys('dp.espitia')
+
+        botonLogin = self.browser.find_element_by_id('id_entrar')
+        botonLogin.click()
+
+        link = self.browser.find_element_by_id('id_logout')
+
+        self.assertIsNotNone(link)
+
+
+
+    def test_verDetalle(self):
         self.browser.get("http://localhost:8000")
-        self.assertIn("Busco Ayuda", self.browser.title)
+        span = self.browser.find_element(By.XPATH, '//span[text()="Diana Espitia"]')
+        span.click()
+
+        self.browser.implicitly_wait(5)
+
+        h2 = self.browser.find_element(By.XPATH, '//h2[text()="Diana Espitia"]')
+
+        self.assertIn('Diana Espitia', h2.text)
+
+
 
     def test_registro(self):
         self.browser.get('http://localhost:8000')
@@ -22,6 +54,8 @@ class FunctionalTest(TestCase):
         link.click()
 
         self.browser.implicitly_wait(5)
+
+        random = date.today().strftime("%y%m%d_%I%M%p")
 
         nombre = self.browser.find_element_by_id('id_nombre')
         nombre.send_keys('Diana')
@@ -40,7 +74,7 @@ class FunctionalTest(TestCase):
         correo.send_keys('dp.espitia@uniandes.edu.co')
 
         nombreUsuario = self.browser.find_element_by_id('id_username')
-        nombreUsuario.send_keys('dp.espitia')
+        nombreUsuario.send_keys('dp.espitia.'+ random )
 
         imagen = self.browser.find_element_by_id('id_imagen')
         imagen.send_keys('C:\Users\William\Pictures\JuanaBoda.jpg')
@@ -55,36 +89,25 @@ class FunctionalTest(TestCase):
 
         self.assertIn('Diana Espitia', span.text)
 
-    def test_verDetalle(self):
+
+
+    def test_tittle(self):
         self.browser.get("http://localhost:8000")
-        span = self.browser.find_element(By.XPATH, '//span[text()="Diana Espitia"]')
-        span.click()
-
-        self.browser.implicitly_wait(5)
-
-        h2 = self.browser.find_element(By.XPATH, '//h2[text()="Diana Espitia"]')
-
-        self.assertIn('Diana Espitia', h2.text)
+        self.assertIn("Busco Ayuda", self.browser.title)
 
 
-    def test_login(self):
-        self.browser.get('http://localhost:8000')
-        link = self.browser.find_element_by_id('id_login')
-        link.click()
 
-        self.browser.switch_to.window(self.browser.window_handles[0])
 
-        self.browser.implicitly_wait(3)
 
-        usuario = self.browser.find_element_by_id('usuario')
-        usuario.send_keys('dp.espitia')
 
-        password = self.browser.find_element_by_id('pass')
-        password.send_keys('dp.espitia')
 
-        botonLogin = self.browser.find_element_by_id('id_entrar')
-        botonLogin.click()
-        self.browser.implicitly_wait(5)
-        span = self.browser.find_element(By.XPATH, '//span[text()="Diana Espitia"]')
 
-        self.assertIn('Diana Espitia', span.text)
+
+
+
+
+
+
+
+
+
