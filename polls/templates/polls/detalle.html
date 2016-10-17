@@ -41,10 +41,21 @@
 
 
         function agregarComentario(){
-            $.post( "/addComment", { texto: $('#comentario').val(), trabajador: trabajador, correo: $('#correo').val() })
-              .done(function( data ) {
-                  mostrarComentarios();
-              });
+            $.ajax({
+                type: "POST",
+                async: false,
+                url: '/addComment',
+                dataType: "json",
+                data:  JSON.stringify({texto: $('#comentario').val(), trabajador: trabajador, correo: $('#correo').val() }),
+                contentType: "application/json; charset=utf-8",
+                success: function (msg)
+                        {
+                            mostrarComentarios();
+                        },
+                error: function (err)
+                { alert(err.responseText);}
+            });
+
         }
     </script>
 </head>

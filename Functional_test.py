@@ -157,15 +157,14 @@ class FunctionalTest(TestCase):
         correo.send_keys('dianaprueba@gmail.com')
 
         comentario = self.browser.find_element_by_id('comentario')
-        comentario.send_keys('Comentario generado de manera aleatoria' + self.random)
+        texto_comentario = 'Comentario generado de manera aleatoria' + self.random
+        comentario.send_keys(texto_comentario)
 
         botonGrabar = self.browser.find_element_by_xpath('//form[1]/button[1]')
         botonGrabar.click()
         self.browser.implicitly_wait(5)
         h4 = self.browser.find_element(By.XPATH, '//h4[text()="dianaprueba@gmail.com"]')
+        self.assertIn('dianaprueba@gmail.com', h4.text)
 
-        self.assertIn('Diana Espitia', h4.text)
-
-        p = self.browser.find_element(By.XPATH, '//p[text()="Comentario generado de manera aleatoria "]')
-
-        self.assertIn('Comentario generado de manera aleatoria' + self.random, p.text)
+        p = self.browser.find_element(By.XPATH, '//p[text()="%s"]' % texto_comentario)
+        self.assertIn(texto_comentario, p.text)

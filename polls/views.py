@@ -2,6 +2,7 @@
 import datetime
 
 import boto
+import simplejson as simplejson
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core import serializers
@@ -91,10 +92,15 @@ def editar_perfil(request,idTrabajador):
 
 @csrf_exempt
 def add_comment(request):
+    dict = simplejson.loads(request.body)
+
+    texto = dict['texto']
+    correo = dict['correo']
+    traba = dict['trabajador']
     if request.method == 'POST':
-       new_comment = Comentario(texto=request.POST.get('texto'),
-                                      trabajador=Trabajador.objects.get(pk=request.POST.get('trabajador')),
-                                      correo=request.POST.get('correo'))
+       new_comment = Comentario(texto=texto,
+            trabajador=Trabajador.objects.get(pk=traba),
+            correo=correo)
        new_comment.save()
     return HttpResponse(serializers.serialize("json", [new_comment]))
 
